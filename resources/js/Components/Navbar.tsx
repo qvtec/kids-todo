@@ -10,7 +10,7 @@ export default function Navbar({ user }: { user: User }) {
             <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-2">
                 <Link href="/" className="flex items-center space-x-3 text-white rtl:space-x-reverse">
                     <img src="/img/user.svg" alt="App Logo" className="h-8 w-8" width={54} height={54} />
-                    <span className="self-center whitespace-nowrap text-2xl font-semibold">Laravel React Auth APP</span>
+                    <span className="self-center whitespace-nowrap text-2xl font-semibold">Kids Todo APP</span>
                 </Link>
                 <div className="flex items-center space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
                     <span className='text-white'>{user.name}</span>

@@ -16,7 +16,7 @@ export default defineConfig({
             includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
             outDir: 'public/build',
             manifest: {
-                name: 'Laravel React Auth APP',
+                name: 'Kids Todo APP',
                 short_name: 'Laravel APP',
                 theme_color: '#0e7490',
                 background_color: "#FFFFFF",
