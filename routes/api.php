@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\UserController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\TodoController;
+use App\Http\Controllers\Api\CheckController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,15 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::apiResource('todo', TodoController::class);
+    Route::apiResource('check', CheckController::class);
 
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function() {
         Route::apiResource('user', UserController::class);

@@ -23,15 +23,14 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('Home');
-    })->name('home');
+    Route::get('/', function () { return Inertia::render('Todo', [ 'type' => 'todo' ]); })->name('todo');
+    Route::get('/house', function () { return Inertia::render('Todo', [ 'type' => 'house' ]); })->name('house');
+    Route::get('/calendar', function () { return Inertia::render('Calendar'); })->name('calendar');
+    Route::get('/settings', function () { return Inertia::render('Settings'); })->name('settings');
 
     Route::get('/images/upload/{filename}', [ImageController::class, 'getUploadImage'])->name('image.upload');
 
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function() {
-        Route::get('/user', function () {
-            return Inertia::render('Admin/User');
-        })->name('user');
+        Route::get('/user', function () { return Inertia::render('Admin/User'); })->name('user');
     });
 });

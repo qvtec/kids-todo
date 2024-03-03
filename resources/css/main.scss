@@ -6,3 +6,22 @@
     --toastify-color-warning: #dec14f;
     --toastify-color-error: #d25c4e;
 }
+
+.fc-header-toolbar {
+    padding: 10px 10px 0px 80px;
+    .fc-toolbar-title {
+        font-size: 18px;
+    }
+}
+
+.total {
+    h5 {
+        color: red;
+        letter-spacing: 2px;
+        text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+    }
+    svg {
+        height: 48px;
+        width: 48px;
+    }
+}

@@ -8,7 +8,7 @@ import { ToastContainer, Slide } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import '../../css/main.scss'
 
-export default function Layouts({ user, title, children }: PropsWithChildren<{ user: User, title?: string }>) {
+export default function Layout({ user, title, children }: PropsWithChildren<{ user: User, title?: string }>) {
     return (
         <>
             <Head title={title} />
