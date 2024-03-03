@@ -78,7 +78,7 @@ export default function CalendarPage({ auth }: PageProps) {
                 <div className="total absolute">
                     <div className="relative flex justify-center pt-1 px-4">
                         <FontAwesomeIcon icon={faCrown} className="text-yellow-200" />
-                        <h5 className="text-xl font-extrabold text-rose-500 absolute mt-4">
+                        <h5 className="text-md font-extrabold text-rose-500 absolute mt-2">
                             {point}
                         </h5>
                     </div>

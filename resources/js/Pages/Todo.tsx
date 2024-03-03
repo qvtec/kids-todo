@@ -40,6 +40,7 @@ export default function TodoPage({ auth, type }: PageProps) {
     const [data, setData] = useState<Todo[]>([])
     const [checkData, setCheckData] = useState<Check[]>([])
     const [filterData, setFilterData] = useState<Todo[]>([])
+    const [allDoneSend, setAllDoneSend] = useState(false)
     const [allDone, setAllDone] = useState(false)
     const [doneAnimOn, setDoneAnimOn] = useState(false)
 
@@ -122,7 +123,10 @@ export default function TodoPage({ auth, type }: PageProps) {
      * AllDoneButtonClick
      */
     async function handleAllDoneButtonClick() {
-        await put<Check[]>(`/api/check/${date}`, { all_done: true })
+        if (!allDoneSend) {
+            await put<Check[]>(`/api/check/${date}`, { all_done: true })
+            setAllDoneSend(true)
+        }
 
         audioPlay('audio_all_done')
 
