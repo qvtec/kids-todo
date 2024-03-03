@@ -44,7 +44,6 @@ export default function CalendarPage({ auth }: PageProps) {
     useEffect(() => {
         async function fetchData() {
             const checkList = await get<Check[]>(`/api/check?date=${dispDate}`)
-            console.log(checkList)
 
             if (checkList) {
                 const events: Events[] = checkList
