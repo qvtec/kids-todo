@@ -53,9 +53,10 @@ class CheckController extends Controller
     public function update(Request $request, string $date)
     {
         $all_done = $request->input('all_done');
+        $type = $request->input('type');
         if ($all_done) {
-            $res = CheckRepository::all_done($date);
-            Slack::send("できた！");
+            $res = CheckRepository::all_done($date, $type);
+            Slack::send("できた！ [" . $type . "]");
             return response()->json($res);
         }
 

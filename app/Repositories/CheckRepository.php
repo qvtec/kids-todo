@@ -74,9 +74,9 @@ class CheckRepository
     * @param string $date
     * @return mixed
     */
-    public static function all_done(string $date)
+    public static function all_done(string $date, string $type)
     {
-        $record = Check::whereDate('date', $date)->where('type', 'todo')->first();
+        $record = Check::whereDate('date', $date)->where('type', $type)->first();
         $now = Carbon::now();
         return $record->update([ 'all_done_at' => $now ]);
     }

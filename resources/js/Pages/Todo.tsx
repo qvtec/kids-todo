@@ -124,7 +124,7 @@ export default function TodoPage({ auth, type }: PageProps) {
      */
     async function handleAllDoneButtonClick() {
         if (!allDoneSend) {
-            await put<Check[]>(`/api/check/${date}`, { all_done: true })
+            await put<Check[]>(`/api/check/${date}`, { type, all_done: true })
             setAllDoneSend(true)
         }
 
