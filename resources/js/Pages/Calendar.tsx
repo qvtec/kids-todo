@@ -42,33 +42,37 @@ export default function CalendarPage({ auth }: PageProps) {
     const pointRate = 10
 
     useEffect(() => {
-        async function fetchData() {
-            const checkList = await get<Check[]>(`/api/check?date=${dispDate}`)
-
-            if (checkList) {
-                const events: Events[] = checkList
-                    .filter((item) => item.all_done_at)
-                    .map((item) => {
-                        return {
-                            start: item.all_done_at
-                        }
-                    })
-                setEvents(events)
-
-                const houseChecks = checkList.filter((item) => item.type == 'house')
-                let houseCheckCount = 0
-                houseChecks.map((item) => {
-                    houseCheckCount += item.todos.filter((todo) => todo.is_done).length
-                })
-
-                setPoint((events.length + houseCheckCount) * pointRate)
-            }
-        }
         fetchData()
-    }, [])
+    }, [dispDate])
+
+    async function fetchData() {
+        const checkList = await get<Check[]>(`/api/check?date=${dispDate}`)
+
+        if (checkList) {
+            const events: Events[] = checkList
+                .filter((item) => item.all_done_at)
+                .map((item) => {
+                    return {
+                        start: item.all_done_at
+                    }
+                })
+            setEvents(events)
+
+            const houseChecks = checkList.filter((item) => item.type == 'house')
+            let houseCheckCount = 0
+            houseChecks.map((item) => {
+                houseCheckCount += item.todos.filter((todo) => todo.is_done).length
+            })
+
+            setPoint((events.length + houseCheckCount) * pointRate)
+        }
+    }
 
     function handleDispDate(info: any) {
-        setDispDate(formatDate(info.view.currentStart))
+        const currentDispDate = formatDate(info.view.currentStart)
+        if (dispDate != currentDispDate) {
+            setDispDate(currentDispDate)
+        }
     }
 
     return (
