@@ -143,7 +143,21 @@ export default function TodoPage({ auth, type }: PageProps) {
      */
     function audioPlay(id: string) {
         const audio = document.getElementById(id) as HTMLAudioElement
-        audio.play()
+        let isPlaying = false
+
+        if (!isPlaying) {
+            audio.currentTime = 0
+            audio.play()
+            isPlaying = true
+        } else {
+            audio.pause()
+            audio.currentTime = 0
+            audio.play()
+        }
+
+        audio.addEventListener('ended', () => {
+            isPlaying = false
+        })
     }
 
     if (loading || !data) return <Loading />
