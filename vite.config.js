@@ -12,9 +12,20 @@ export default defineConfig({
         react(),
         VitePWA({
             registerType: 'autoUpdate',
-            injectRegister: 'auto',
+            injectRegister: 'script',
             includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
             outDir: 'public/build',
+            base: 'public',
+            scope: '/',
+            buildBase: '/',
+            workbox: {
+              navigateFallback: '/',
+              navigateFallbackDenylist: [/\/[api,admin]+\/.*/],
+              maximumFileSizeToCacheInBytes: 4194304,
+              globPatterns: ['**/*.{css,js,html,svg,png,ico,txt,woff2}'],
+              cleanupOutdatedCaches: true,
+              directoryIndex: null, // this prevents fallback to index.html
+            },
             manifest: {
                 name: 'Kids Todo APP',
                 short_name: 'Laravel APP',
@@ -22,6 +33,9 @@ export default defineConfig({
                 background_color: "#FFFFFF",
                 display: "standalone",
                 orientation: "portrait",
+                id: '/',
+                scope: '/',
+                start_url: '/',
                 icons: [
                     {
                         src: '/pwa-192x192.png',
