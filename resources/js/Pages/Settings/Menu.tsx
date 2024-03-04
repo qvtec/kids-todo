@@ -5,24 +5,18 @@ import { Link } from '@inertiajs/react'
 import Layout from '@/Layouts/Layout'
 
 export default function SettingsMenuPage({ auth }: PageProps) {
-    function logout() {
-        console.log('logout')
-    }
-
     return (
         <Layout user={auth.user} title="Home">
             <div className="max-w-sm m-3 text-gray-900 bg-white border border-gray-200 rounded-lg">
-                <button
-                    type="button"
-                    onClick={logout}
-                    className="relative inline-flex items-center w-full px-4 py-6 text-sm font-medium border-b border-gray-200 rounded-t-lg hover:bg-gray-100 hover:text-blue-700"
-                >
-                    <FontAwesomeIcon
-                        icon={faRightFromBracket}
-                        className="w-4 h-4 me-2.5"
-                    />
-                    ログアウト
-                </button>
+                <Link href="/">
+                    <button
+                        type="button"
+                        className="relative inline-flex items-center w-full px-4 py-6 text-sm font-medium border-b border-gray-200 rounded-t-lg hover:bg-gray-100 hover:text-blue-700"
+                    >
+                        <FontAwesomeIcon icon={faRightFromBracket} className="w-4 h-4 me-2.5" />
+                        ログアウト
+                    </button>
+                </Link>
                 <Link href="/admin/todo">
                     <button
                         type="button"

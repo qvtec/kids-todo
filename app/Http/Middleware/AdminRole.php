@@ -20,7 +20,8 @@ class AdminRole
             if ($request->is('api/*')) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
-            return redirect(RouteServiceProvider::HOME);
+            // return redirect(RouteServiceProvider::HOME);
+            abort(403, 'Unauthorized action.');
         }
 
         return $next($request);
