@@ -28,7 +28,7 @@ export default defineConfig({
             },
             manifest: {
                 name: 'Kids Todo APP',
-                short_name: 'Laravel APP',
+                short_name: 'Kids Todo',
                 theme_color: '#0e7490',
                 background_color: "#FFFFFF",
                 display: "standalone",
