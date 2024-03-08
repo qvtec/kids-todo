@@ -18,6 +18,15 @@
     }
 }
 
+.fc-h-event {
+    background-color: #fff;
+    border: #fff;
+
+    svg {
+        color: gray;
+    }
+}
+
 .total {
     h5 {
         color: red;
@@ -28,4 +37,8 @@
         height: 38px;
         width: 38px;
     }
+}
+
+.shadow-text {
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
 }

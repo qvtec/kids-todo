@@ -54,4 +54,10 @@ class TodoController extends Controller
         TodoRepository::delete($id);
         return response()->json(null, 204);
     }
+
+    public function todoAll()
+    {
+        $data = TodoRepository::allWithTrashed();
+        return $data;
+    }
 }

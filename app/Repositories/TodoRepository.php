@@ -54,4 +54,10 @@ class TodoRepository
     {
         return Todo::destroy($id);
     }
+
+    public static function allWithTrashed()
+    {
+        $list = Todo::orderBy('time', 'asc')->withTrashed()->get();
+        return $list;
+    }
 }

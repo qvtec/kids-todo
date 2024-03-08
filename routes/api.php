@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('todo', TodoController::class);
     Route::apiResource('check', CheckController::class);
 
+    Route::get('todo-all', [TodoController::class, 'todoAll'])->name('todo.all');
+
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function() {
         Route::apiResource('user', UserController::class);
     });
