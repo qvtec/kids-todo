@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/house', function () { return Inertia::render('Todo', [ 'type' => 'house' ]); })->name('house');
     Route::get('/calendar', function () { return Inertia::render('Calendar'); })->name('calendar');
     Route::get('/settings', function () { return Inertia::render('Settings/Menu'); })->name('settings.menu');
+    Route::get('/study', function () { return Inertia::render('Study/Test'); })->name('study.test');
 
     Route::get('/images/upload/{filename}', [ImageController::class, 'getUploadImage'])->name('image.upload');
 
