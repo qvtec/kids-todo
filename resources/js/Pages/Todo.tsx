@@ -123,12 +123,12 @@ export default function TodoPage({ auth, type }: PageProps) {
      * AllDoneButtonClick
      */
     async function handleAllDoneButtonClick() {
-        if (!allDoneSend) {
-            await put<Check[]>(`/api/check/${date}`, { type, all_done: true })
-            setAllDoneSend(true)
-        }
-
         audioPlay('audio_all_done')
+
+        if (!allDoneSend) {
+            setAllDoneSend(true)
+            await put<Check[]>(`/api/check/${date}`, { type, all_done: true })
+        }
 
         if (doneAnimOn) {
             setDoneAnimOn(false)
@@ -143,21 +143,8 @@ export default function TodoPage({ auth, type }: PageProps) {
      */
     function audioPlay(id: string) {
         const audio = document.getElementById(id) as HTMLAudioElement
-        let isPlaying = false
-
-        if (!isPlaying) {
-            audio.currentTime = 0
-            audio.play()
-            isPlaying = true
-        } else {
-            audio.pause()
-            audio.currentTime = 0
-            audio.play()
-        }
-
-        audio.addEventListener('ended', () => {
-            isPlaying = false
-        })
+        audio.currentTime = 0
+        audio.play()
     }
 
     if (loading || !data) return <Loading />
