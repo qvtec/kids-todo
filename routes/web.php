@@ -34,5 +34,6 @@ Route::middleware('auth')->group(function () {
     Route::middleware('admin')->prefix('admin')->name('admin.')->group(function() {
         Route::get('/user', function () { return Inertia::render('Settings/User'); })->name('user');
         Route::get('/todo', function () { return Inertia::render('Settings/TodoEdit'); })->name('todo');
+        Route::get('/study', function () { return Inertia::render('Master/Study'); })->name('study');
     });
 });
