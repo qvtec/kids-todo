@@ -6,6 +6,7 @@ use App\Models\Subject;
 use App\Models\StudyTest;
 use App\Models\Question;
 use App\Models\Answer;
+use Carbon\Carbon;
 
 class StudyRepository
 {
@@ -36,9 +37,10 @@ class StudyRepository
      *
      * @return array
      */
-    public static function questions($id)
+    public static function questions($id, $limit)
     {
-        $list = Question::where('study_test_id', $id)->get();
+        $list = Question::where('study_test_id', $id)
+            ->orderByRaw('RAND()')->limit($limit)->get();
         return $list;
     }
 
@@ -61,6 +63,20 @@ class StudyRepository
         }
 
         return Answer::create($data);
+    }
+
+    /**
+     * answer
+     *
+     * @return array
+     */
+    public static function answerDate($date)
+    {
+        $now = new Carbon($date);
+        $data = Answer::whereYear('created_at', $now->year)
+                    ->whereMonth('created_at', $now->month)
+                    ->get();
+        return $data;
     }
 
     /**

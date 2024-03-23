@@ -20,6 +20,8 @@ return new class extends Migration
             $table->id();
             $table->integer('subject_id')->nullable();
             $table->string('name')->nullable();
+            $table->integer('countdown')->nullable();
+            $table->integer('total')->nullable();
             $table->timestamps();
         });
         Schema::create('questions', function (Blueprint $table) {

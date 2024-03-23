@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import NumberButton from '@/Components/NumberButton'
+import { audioPlay } from '@/utils/sound'
 
 interface Props {
   onChange: (value: string) => void
@@ -16,10 +17,12 @@ export default function NumberButtonsComponent({ onChange, onSubmit }: Props) {
   }
 
   function handleNumber(value: number) {
+    audioPlay('number_btn_click_sound')
     setInputData(inputValue + value)
   }
 
   function handleClear() {
+    audioPlay('number_btn_click_sound')
     setInputData('')
   }
 
@@ -42,6 +45,7 @@ export default function NumberButtonsComponent({ onChange, onSubmit }: Props) {
       <NumberButton className="border-none bg-blue-800 text-white" onClick={handleSubmit}>
         OK
       </NumberButton>
+      <audio id="number_btn_click_sound" src="/sounds/btn_ca.mp3"></audio>
     </div>
   )
 }

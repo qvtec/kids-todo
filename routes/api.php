@@ -28,6 +28,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('subject', [StudyController::class, 'subject'])->name('subject');
         Route::get('question/{study_test_id}', [StudyController::class, 'question'])->name('question');
         Route::post('answer', [StudyController::class, 'answer'])->name('answer');
+        Route::get('answer', [StudyController::class, 'answerDate'])->name('answer.date');
         Route::get('answer/{id}', [StudyController::class, 'show'])->name('answer.show');
     });
 

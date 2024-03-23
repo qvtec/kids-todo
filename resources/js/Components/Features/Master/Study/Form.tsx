@@ -29,6 +29,8 @@ interface TestForm {
   id?: number
   subject_id?: number
   name: string
+  countdown?: number
+  total?: number
   question?: QuestionForm[]
 }
 
@@ -141,6 +143,28 @@ export default function MasterStudyForm({ selectedTest, subjectOptions, onClose,
           <InputLabel htmlFor="name" value="テスト名" />
           <TextInput value={data.name} onChange={(e) => setData('name', e.target.value)} required />
           <InputError message={errors.name} className="mt-2" />
+        </div>
+
+        <div className="mt-4">
+          <InputLabel htmlFor="countdown" value="カウントダウン" />
+          <TextInput
+            type="number"
+            value={data.countdown ?? 0}
+            onChange={(e) => setData('countdown', Number(e.target.value ?? 0))}
+            required
+          />
+          <InputError message={errors.countdown} className="mt-2" />
+        </div>
+
+        <div className="mt-4">
+          <InputLabel htmlFor="total" value="問題件数" />
+          <TextInput
+            type="number"
+            value={data.total ?? 0}
+            onChange={(e) => setData('total', Number(e.target.value ?? 0))}
+            required
+          />
+          <InputError message={errors.total} className="mt-2" />
         </div>
 
         <div className="mt-4">

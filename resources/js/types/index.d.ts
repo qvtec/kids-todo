@@ -29,6 +29,8 @@ export interface StudyTest {
   id: number
   subject_id: number
   name: string
+  countdown: number
+  total: number
   created_at: string
   updated_at: string
 }
@@ -50,6 +52,7 @@ export interface Answer {
   score: number
   time: string
   result_contens: object
+  is_complete: boolean
   created_at: string
   updated_at: string
 }

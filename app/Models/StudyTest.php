@@ -16,6 +16,8 @@ class StudyTest extends Model
     protected $fillable = [
         'subject_id',
         'name',
+        'countdown',
+        'total'
     ];
 
     public function subject()

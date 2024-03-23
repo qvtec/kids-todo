@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Answer;
 use App\Repositories\StudyRepository;
 use Illuminate\Http\Request;
 
@@ -20,9 +21,10 @@ class StudyController extends Controller
     /**
      * 問題一覧
      */
-    public function question(int $study_test_id)
+    public function question(int $study_test_id, Request $request)
     {
-        $data = StudyRepository::questions($study_test_id);
+        $limit = $request->query('limit', 10);
+        $data = StudyRepository::questions($study_test_id, $limit);
         return $data;
     }
 
@@ -33,6 +35,13 @@ class StudyController extends Controller
     {
         $data = $request->all();
         return StudyRepository::answer($data);
+    }
+
+    public function answerDate(Request $request)
+    {
+        $date = $request->query('date', date('Y-m-01'));
+        $list = StudyRepository::answerDate($date);
+        return $list;
     }
 
 

@@ -38,6 +38,8 @@ class StudyMasterRepository
         $studyTest = StudyTest::create([
             'subject_id' => $data['subject_id'],
             'name' => $data['name'],
+            'countdown' => $data['countdown'],
+            'total' => $data['total'],
         ]);
 
         foreach ($data['question'] as $question) {
@@ -62,6 +64,8 @@ class StudyMasterRepository
         $studyTest->update([
             'subject_id' => $data['subject_id'],
             'name' => $data['name'],
+            'countdown' => $data['countdown'],
+            'total' => $data['total'],
         ]);
 
         foreach ($data['question'] as $question) {
