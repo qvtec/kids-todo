@@ -138,7 +138,7 @@ export default function StudyTestComponent({ selectedTest }: Props) {
             </div>
           </div>
           <NumberButtonsComponent onChange={(value) => handleChangeInput(value)} onSubmit={handleSubmit} />
-          <div className="fixed bottom-24 right-0 h-24 w-24 bg-cover bg-center">
+          <div className="fixed bottom-24 left-0 h-24 w-24 bg-cover bg-center">
             <img src={studyImg} alt="Image" className="" />
           </div>
           <audio id="btn_ok" src="/sounds/btn_ok.mp3"></audio>
