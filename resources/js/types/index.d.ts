@@ -13,6 +13,27 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
   }
 }
 
+export interface Check {
+  id: number
+  date: string
+  type: string
+  todos: CheckTodo[]
+  all_done_at: string
+}
+export interface CheckTodo {
+  todo_id: number
+  is_done: boolean
+}
+
+export interface Todo {
+  id: number
+  name: string
+  time: string
+  icon: string
+  color: string
+  type: string
+}
+
 export interface Option {
   id: number
   label: string
@@ -51,7 +72,7 @@ export interface Answer {
   study_test_id: number
   score: number
   time: string
-  result_contens: object
+  result_contens: Question[]
   is_complete: boolean
   created_at: string
   updated_at: string

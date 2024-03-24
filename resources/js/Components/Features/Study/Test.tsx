@@ -31,7 +31,7 @@ export default function StudyTestComponent({ selectedTest }: Props) {
   const [isErr, setIsErr] = useState(false)
   const [inputValue, setInputValue] = useState<string>('')
   const [finishImg, seFinishImg] = useState('')
-  const [studyImg, seStudyImg] = useState('/img/smanai.jpg')
+  const [studyImg, seStudyImg] = useState('')
 
   useEffect(() => {
     async function fetchData() {
@@ -70,12 +70,12 @@ export default function StudyTestComponent({ selectedTest }: Props) {
       is_complete,
     }
     const res = await post<Answer[]>(`/api/study/answer`, body)
-    console.log('handleEnd', res)
+    // console.log('handleEnd', res)
   }
 
   async function handleTimeup() {
     data[no].is_failed = true
-    console.log('timeup!', no, data[no])
+    // console.log('timeup!', no, data[no])
     audioPlay('sound_timeup')
     await handleEnd()
   }
@@ -90,7 +90,7 @@ export default function StudyTestComponent({ selectedTest }: Props) {
       correct()
 
       if (data.length == no + 1) {
-        console.log('FINISH!', data.length)
+        // console.log('FINISH!', data.length)
         audioPlay('sound_finish')
         await handleEnd()
         return
@@ -108,7 +108,7 @@ export default function StudyTestComponent({ selectedTest }: Props) {
     audioPlay('btn_ok')
     seStudyImg('/img/stamp_ok.png')
     setTimeout(() => {
-      seStudyImg('/img/smanai.jpg')
+      seStudyImg('')
     }, 1000)
   }
 
@@ -138,9 +138,13 @@ export default function StudyTestComponent({ selectedTest }: Props) {
             </div>
           </div>
           <NumberButtonsComponent onChange={(value) => handleChangeInput(value)} onSubmit={handleSubmit} />
-          <div className="fixed bottom-24 left-0 h-24 w-24 bg-cover bg-center">
-            <img src={studyImg} alt="Image" className="" />
-          </div>
+
+          {studyImg && (
+            <div className="fixed bottom-10 left-0 h-24 w-24 bg-cover bg-center">
+              <img src={studyImg} alt="Image" className="" />
+            </div>
+          )}
+
           <audio id="btn_ok" src="/sounds/btn_ok.mp3"></audio>
           <audio id="btn_ng" src="/sounds/btn_ng.mp3"></audio>
         </>

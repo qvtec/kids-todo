@@ -37,11 +37,23 @@ class StudyController extends Controller
         return StudyRepository::answer($data);
     }
 
+    /**
+     * テスト月別結果
+     */
     public function answerDate(Request $request)
     {
         $date = $request->query('date', date('Y-m-01'));
         $list = StudyRepository::answerDate($date);
         return $list;
+    }
+
+    /**
+     * テスト結果詳細
+     */
+    public function show(int $id)
+    {
+        $data = StudyRepository::show($id);
+        return response()->json($data);
     }
 
 
@@ -62,15 +74,6 @@ class StudyController extends Controller
         $data = $request->all();
         $data = StudyRepository::store($data);
         return response()->json($data, 201);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(int $id)
-    {
-        $data = StudyRepository::show($id);
-        return response()->json($data);
     }
 
     /**

@@ -42,6 +42,9 @@ export default function StudyListComponent({ data, loading, onStart }: Props) {
           </table>
         </div>
       ))}
+      <div className="fixed bottom-24 right-0 h-24 w-24 bg-cover bg-center">
+        <img src="/img/smanai.png" alt="Image" className="" />
+      </div>
     </>
   )
 }

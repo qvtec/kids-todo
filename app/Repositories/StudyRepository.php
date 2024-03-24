@@ -35,12 +35,31 @@ class StudyRepository
     /**
      * questions
      *
+     * ng_count - ok_count > 3
+     * ng_count + ok_count = 0
+     *
      * @return array
      */
     public static function questions($id, $limit)
     {
         $list = Question::where('study_test_id', $id)
+            ->whereRaw('ng_count - ok_count > ?', [3])
             ->orderByRaw('RAND()')->limit($limit)->get();
+
+        if (count($list) < $limit) {
+          $yet_list = Question::where('study_test_id', $id)
+              ->where('ng_count', 0)
+              ->where('ok_count', 0)
+              ->orderByRaw('RAND()')->limit($limit-count($list))->get();
+          $list = $list->concat($yet_list);
+        }
+
+        if (count($list) < $limit) {
+          $all_list = Question::where('study_test_id', $id)
+              ->orderByRaw('RAND()')->limit($limit-count($list))->get();
+          $list = $list->concat($all_list);
+        }
+
         return $list;
     }
 
@@ -66,26 +85,29 @@ class StudyRepository
     }
 
     /**
-     * answer
+     * answer Month
      *
      * @return array
      */
     public static function answerDate($date)
     {
         $now = new Carbon($date);
-        $data = Answer::whereYear('created_at', $now->year)
+        $data = Answer::select('id', 'study_test_id', 'is_complete', 'created_at')
+                    ->whereYear('created_at', $now->year)
                     ->whereMonth('created_at', $now->month)
                     ->get();
         return $data;
     }
 
     /**
-    * @param int $id
-    * @return mixed
+     * answer detail
+     *
+     * @param int $id
+     * @return mixed
     */
     public static function show(int $id)
     {
-        return Subject::findOrFail($id);
+        return Answer::findOrFail($id);
     }
 
     /**

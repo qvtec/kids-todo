@@ -13,39 +13,20 @@ import { IconName } from '@fortawesome/fontawesome-common-types'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import Layout from '@/Layouts/Layout'
-import { Answer, PageProps } from '@/types'
+import { Answer, Check, PageProps, Todo } from '@/types'
 import { formatDate, formatDateTime, now } from '@/utils/date'
 import { get } from '@/utils/api'
 import { DatesSetArg, EventClickArg } from '@fullcalendar/core/index.js'
 import { format } from 'date-fns'
 import Modal from '@/Components/Modal'
+import CalendarDetailModal from '@/Components/Features/Calendar/DetailModal'
+import CalendarDetailModalStudy from '@/Components/Features/Calendar/DetailModalStudy'
 
 library.add(fas)
 
 interface Events {
   start: string
   title?: string // iconName
-}
-
-interface Check {
-  id: number
-  date: string
-  type: string
-  todos: CheckTodo[]
-  all_done_at: string
-}
-interface CheckTodo {
-  todo_id: number
-  is_done: boolean
-}
-
-interface Todo {
-  id: number
-  name: string
-  time: string
-  icon: string
-  color: string
-  type: string
 }
 
 export default function CalendarPage({ auth }: PageProps) {
@@ -57,8 +38,9 @@ export default function CalendarPage({ auth }: PageProps) {
   const [point, setPoint] = useState(0)
   const [showEventModal, setShowEventModal] = useState(false)
   const [selectEvent, setSelectEvent] = useState<Check>()
+  const [selectEventStudy, setSelectEventStudy] = useState<Answer[]>()
 
-  const pointRate = 10
+  const POINT_RATE = 10
 
   useEffect(() => {
     fetchData()
@@ -95,22 +77,13 @@ export default function CalendarPage({ auth }: PageProps) {
 
     if (studyList && studyList.length > 0) {
       studyList.map((item) => {
-        if (item.is_complete) {
+        const start = formatDateTime(item.created_at, 'yyyy-MM-dd 07:00:00')
+        if (!events.some((item) => item.title == 'pencil' && item.start == start)) {
           events.push({
             id: events.length,
-            start: item.created_at,
+            start: start,
             title: 'pencil',
           })
-          console.log(item)
-        } else {
-          const start = formatDate(item.created_at, 'yyyy-MM-dd 07:00:00')
-          if (!events.some((item) => item.title == 'pen' && item.start == start)) {
-            events.push({
-              id: events.length,
-              start: start,
-              title: 'pen',
-            })
-          }
         }
       })
     }
@@ -127,7 +100,7 @@ export default function CalendarPage({ auth }: PageProps) {
     const todoChecks = checkList.filter((item) => item.type == 'todo' && item.all_done_at)
     const todoCheckCount = todoChecks.length
 
-    return (houseCheckCount + todoCheckCount) * pointRate
+    return (houseCheckCount + todoCheckCount) * POINT_RATE
   }
 
   function handleDispDate(info: DatesSetArg) {
@@ -139,10 +112,15 @@ export default function CalendarPage({ auth }: PageProps) {
 
   function handleEventClick(info: EventClickArg) {
     if (info.event.title.includes('pen')) {
-      return
+      const start = formatDate(info.event.start?.toString() || '')
+      const studyEvents = study?.filter((item) => item.created_at.includes(start))
+      setSelectEventStudy(studyEvents)
+      setSelectEvent(undefined)
+    } else {
+      const checkEvent = checks?.find((item) => item.id == Number(info.event.id))
+      setSelectEvent(checkEvent)
+      setSelectEventStudy(undefined)
     }
-    const checkEvent = checks?.find((item) => item.id == Number(info.event.id))
-    setSelectEvent(checkEvent)
     setShowEventModal(true)
   }
 
@@ -168,44 +146,15 @@ export default function CalendarPage({ auth }: PageProps) {
         />
       </div>
       <Modal show={showEventModal} onClose={() => setShowEventModal(false)}>
-        {selectEvent && todoAll && (
-          <>
-            <div className="flex text-lg font-medium leading-6 text-gray-900">
-              {formatDate(selectEvent.date, 'y年M月d日')}
-              {selectEvent.all_done_at && (
-                <div className="relative -mt-3 ml-3 h-10 w-10">
-                  <FontAwesomeIcon icon={faCrown} className="absolute left-0 top-0 h-10 w-10 text-yellow-300" />
-                  <div className="shadow-text absolute left-0 top-4 w-10 text-center text-sm font-bold text-rose-500">
-                    {selectEvent.type == 'todo'
-                      ? pointRate
-                      : selectEvent.todos.filter((item) => item.is_done).length * pointRate}
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="mt-2 min-w-52">
-              {selectEvent.todos?.map((item, i) => (
-                <div className="flex items-center rounded-lg">
-                  <div className="flex h-10 w-10 shrink-0 items-center">
-                    <FontAwesomeIcon icon={item.is_done ? faSquareCheck : faSquare} className="text-gray-500" />
-                  </div>
-                  <p className="text-sm font-medium text-gray-900">
-                    {todoAll.find((todo) => todo.id == item.todo_id)?.name}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-4">
-              <button
-                type="button"
-                className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                onClick={() => setShowEventModal(false)}
-              >
-                とじる
-              </button>
-            </div>
-          </>
+        {selectEventStudy ? (
+          <CalendarDetailModalStudy selectEvents={selectEventStudy} onClose={() => setShowEventModal(false)} />
+        ) : (
+          <CalendarDetailModal
+            selectEvent={selectEvent}
+            todoAll={todoAll}
+            pointRate={POINT_RATE}
+            onClose={() => setShowEventModal(false)}
+          />
         )}
       </Modal>
     </Layout>

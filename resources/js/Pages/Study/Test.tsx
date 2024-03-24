@@ -5,7 +5,7 @@ import { get } from '@/utils/api'
 import Loading from '@/Components/Loading'
 import StudyListComponent from '@/Components/Features/Study/List'
 import StudyTestComponent from '@/Components/Features/Study/Test'
-import { audioPlay } from '@/utils/sound'
+import { audioLoad, audioPlay } from '@/utils/sound'
 
 interface SubjectTest extends Subject {
   study_test: StudyTest[]
@@ -27,14 +27,10 @@ export default function StudyTestPage({ auth }: PageProps) {
     }
     fetchData()
 
-    document.querySelectorAll('audio').forEach((el) => {
-      el.load()
-    })
+    audioLoad()
   }, [])
 
   function handleStart(test: StudyTest) {
-    console.log('start', test)
-
     let countdown = 3
     audioPlay('btn_sound_start')
     setStartCountDown(countdown)

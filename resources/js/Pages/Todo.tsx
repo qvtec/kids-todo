@@ -18,6 +18,7 @@ import { now } from '@/utils/date'
 import { get, put } from '@/utils/api'
 import Loading from '@/Components/Loading'
 import { Link } from '@inertiajs/react'
+import { audioLoad, audioPlay } from '@/utils/sound'
 
 interface Todo {
   id: number
@@ -80,9 +81,7 @@ export default function TodoPage({ auth, type }: PageProps) {
     })
     setFilterData(filterTodo)
 
-    document.querySelectorAll('audio').forEach((el) => {
-      el.load()
-    })
+    audioLoad()
 
     setLoading(false)
   }, [data, checkData, type])
@@ -140,15 +139,6 @@ export default function TodoPage({ auth, type }: PageProps) {
     setTimeout(() => {
       setDoneAnimOn(true)
     }, 100)
-  }
-
-  /**
-   * audioPlay
-   */
-  function audioPlay(id: string) {
-    const audio = document.getElementById(id) as HTMLAudioElement
-    audio.currentTime = 0
-    audio.play()
   }
 
   if (loading || !data) return <Loading />
