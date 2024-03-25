@@ -8,6 +8,7 @@ import { Link } from '@inertiajs/react'
 import NumberButtonsComponent from './NumberButtons'
 import CountdownComponent from './CountDonw'
 import { audioPlay } from '@/utils/sound'
+import useAudioPlayer from '@/hooks/useAudioPlayer'
 
 interface Props {
   selectedTest: StudyTest
@@ -32,6 +33,11 @@ export default function StudyTestComponent({ selectedTest }: Props) {
   const [inputValue, setInputValue] = useState<string>('')
   const [finishImg, seFinishImg] = useState('')
   const [studyImg, seStudyImg] = useState('')
+
+  const { playAudio: playAudioOK } = useAudioPlayer('/sounds/btn_ng.mp3')
+  const { playAudio: playAudioNG } = useAudioPlayer('/sounds/btn_ok.mp3')
+  const { playAudio: playAudioFinish } = useAudioPlayer('/sounds/finish.mp3')
+  const { playAudio: playAudioTimeup } = useAudioPlayer('/sounds/timeup.mp3')
 
   useEffect(() => {
     async function fetchData() {
@@ -76,7 +82,7 @@ export default function StudyTestComponent({ selectedTest }: Props) {
   async function handleTimeup() {
     data[no].is_failed = true
     // console.log('timeup!', no, data[no])
-    audioPlay('sound_timeup')
+    playAudioTimeup()
     await handleEnd()
   }
 
@@ -91,7 +97,7 @@ export default function StudyTestComponent({ selectedTest }: Props) {
 
       if (data.length == no + 1) {
         // console.log('FINISH!', data.length)
-        audioPlay('sound_finish')
+        playAudioFinish()
         await handleEnd()
         return
       }
@@ -105,7 +111,7 @@ export default function StudyTestComponent({ selectedTest }: Props) {
 
   function correct() {
     setIsErr(false)
-    audioPlay('btn_ok')
+    playAudioOK()
     seStudyImg('/img/stamp_ok.png')
     setTimeout(() => {
       seStudyImg('')
@@ -114,7 +120,7 @@ export default function StudyTestComponent({ selectedTest }: Props) {
 
   function incorrect() {
     setIsErr(true)
-    audioPlay('btn_ng')
+    playAudioNG()
     seStudyImg('/img/stamp_ng.png')
   }
 
@@ -144,9 +150,6 @@ export default function StudyTestComponent({ selectedTest }: Props) {
               <img src={studyImg} alt="Image" className="" />
             </div>
           )}
-
-          <audio id="btn_ok" src="/sounds/btn_ok.mp3"></audio>
-          <audio id="btn_ng" src="/sounds/btn_ng.mp3"></audio>
         </>
       ) : (
         <div>
@@ -194,8 +197,6 @@ export default function StudyTestComponent({ selectedTest }: Props) {
           )}
         </div>
       )}
-      <audio id="sound_finish" src="/sounds/finish.mp3"></audio>
-      <audio id="sound_timeup" src="/sounds/timeup.mp3"></audio>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import Loading from '@/Components/Loading'
 import StudyListComponent from '@/Components/Features/Study/List'
 import StudyTestComponent from '@/Components/Features/Study/Test'
 import { audioLoad, audioPlay } from '@/utils/sound'
+import useAudioPlayer from '@/hooks/useAudioPlayer'
 
 interface SubjectTest extends Subject {
   study_test: StudyTest[]
@@ -16,6 +17,9 @@ export default function StudyTestPage({ auth }: PageProps) {
   const [data, setData] = useState<SubjectTest[]>([])
   const [selectedTest, setSelectedTest] = useState<StudyTest>()
   const [startCountDown, setStartCountDown] = useState(0)
+
+  const { playAudio: playAudioStart } = useAudioPlayer('/sounds/start.mp3')
+  const { playAudio: playAudioCount } = useAudioPlayer('/sounds/countdown.mp3')
 
   useEffect(() => {
     async function fetchData() {
@@ -32,7 +36,7 @@ export default function StudyTestPage({ auth }: PageProps) {
 
   function handleStart(test: StudyTest) {
     let countdown = 3
-    audioPlay('btn_sound_start')
+    playAudioStart()
     setStartCountDown(countdown)
     setSelectedTest(test)
     const intervalId = setInterval(() => {
@@ -41,7 +45,7 @@ export default function StudyTestPage({ auth }: PageProps) {
       } else {
         countdown -= 1
         setStartCountDown(countdown)
-        audioPlay('sound_countdown')
+        playAudioCount()
       }
     }, 1000)
 
@@ -66,8 +70,6 @@ export default function StudyTestPage({ auth }: PageProps) {
           <StudyTestComponent selectedTest={selectedTest} />
         )}
       </div>
-      <audio id="btn_sound_start" src="/sounds/start.mp3"></audio>
-      <audio id="sound_countdown" src="/sounds/countdown.mp3"></audio>
     </Layout>
   )
 }

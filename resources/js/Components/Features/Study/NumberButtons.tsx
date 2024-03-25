@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import NumberButton from '@/Components/NumberButton'
-import { audioPlay } from '@/utils/sound'
+import useAudioPlayer from '@/hooks/useAudioPlayer'
 
 interface Props {
   onChange: (value: string) => void
@@ -11,18 +11,21 @@ export default function NumberButtonsComponent({ onChange, onSubmit }: Props) {
   const numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3]
   const [inputValue, setInputValue] = useState<string>('')
 
+  const { playAudio: playAudioBtn } = useAudioPlayer('/sounds/btn_ca.mp3')
+  const { playAudio: playAudioNg } = useAudioPlayer('/sounds/btn_ng.mp3')
+
   function setInputData(value: string) {
     setInputValue(value)
     onChange(value)
   }
 
   function handleNumber(value: number) {
-    audioPlay('number_btn_click_sound')
+    playAudioBtn()
     setInputData(inputValue + value)
   }
 
   function handleClear() {
-    audioPlay('number_btn_click_sound')
+    playAudioNg()
     setInputData('')
   }
 
@@ -45,7 +48,6 @@ export default function NumberButtonsComponent({ onChange, onSubmit }: Props) {
       <NumberButton className="border-none bg-blue-800 text-white" onClick={handleSubmit}>
         OK
       </NumberButton>
-      <audio id="number_btn_click_sound" src="/sounds/btn_ca.mp3"></audio>
     </div>
   )
 }
