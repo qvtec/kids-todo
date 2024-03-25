@@ -7,8 +7,8 @@ import ButtonSecondary from '@/Components/ButtonSecondary'
 import { Link } from '@inertiajs/react'
 import NumberButtonsComponent from './NumberButtons'
 import CountdownComponent from './CountDonw'
-import { audioPlay } from '@/utils/sound'
 import useAudioPlayer from '@/hooks/useAudioPlayer'
+import useAudioPlayerRandom from '@/hooks/useAudioPlayerRandom'
 
 interface Props {
   selectedTest: StudyTest
@@ -34,10 +34,22 @@ export default function StudyTestComponent({ selectedTest }: Props) {
   const [finishImg, seFinishImg] = useState('')
   const [studyImg, seStudyImg] = useState('')
 
-  const { playAudio: playAudioOK } = useAudioPlayer('/sounds/btn_ng.mp3')
-  const { playAudio: playAudioNG } = useAudioPlayer('/sounds/btn_ok.mp3')
-  const { playAudio: playAudioFinish } = useAudioPlayer('/sounds/finish.mp3')
-  const { playAudio: playAudioTimeup } = useAudioPlayer('/sounds/timeup.mp3')
+  const { playAudio: playAudioOK } = useAudioPlayerRandom([
+    '/sounds/sumanai/できてるじゃないか.mp3', // おおっ！できてるじゃないか
+    '/sounds/sumanai/やるね.mp3',
+    '/sounds/sumanai/よーし.mp3',
+    '/sounds/sumanai/やるじゃないか.mp3',
+  ])
+  const { playAudio: playAudioNG } = useAudioPlayer('/sounds/btn_ng.mp3')
+  const { playAudio: playAudioTimeup } = useAudioPlayerRandom([
+    '/sounds/sumanai/すごい.mp3', // おおっ！すごい！(イエーイ)
+    '/sounds/sumanai/できてるじゃないか.mp3', // おおっ！できてるじゃないか
+    '/sounds/sumanai/やるじゃないか.mp3',
+  ])
+  const { playAudio: playAudioFinish } = useAudioPlayerRandom([
+    '/sounds/sumanai/ふークリア.mp3', // ふーックリアした
+    '/sounds/sumanai/クリア当然_マネー.mp3',
+  ])
 
   useEffect(() => {
     async function fetchData() {
@@ -93,15 +105,14 @@ export default function StudyTestComponent({ selectedTest }: Props) {
   async function handleSubmit() {
     const question = data[no]
     if (inputValue == question.answer) {
-      correct()
-
       if (data.length == no + 1) {
-        // console.log('FINISH!', data.length)
+        console.log('FINISH!', data.length)
         playAudioFinish()
         await handleEnd()
         return
       }
 
+      correct()
       setNo(no + 1)
     } else {
       question.is_failed = true

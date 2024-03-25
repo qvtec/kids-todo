@@ -5,8 +5,7 @@ import { get } from '@/utils/api'
 import Loading from '@/Components/Loading'
 import StudyListComponent from '@/Components/Features/Study/List'
 import StudyTestComponent from '@/Components/Features/Study/Test'
-import { audioLoad, audioPlay } from '@/utils/sound'
-import useAudioPlayer from '@/hooks/useAudioPlayer'
+import useAudioPlayerRandom from '@/hooks/useAudioPlayerRandom'
 
 interface SubjectTest extends Subject {
   study_test: StudyTest[]
@@ -18,8 +17,10 @@ export default function StudyTestPage({ auth }: PageProps) {
   const [selectedTest, setSelectedTest] = useState<StudyTest>()
   const [startCountDown, setStartCountDown] = useState(0)
 
-  const { playAudio: playAudioStart } = useAudioPlayer('/sounds/start.mp3')
-  const { playAudio: playAudioCount } = useAudioPlayer('/sounds/countdown.mp3')
+  const { playAudio: playAudioStart } = useAudioPlayerRandom([
+    '/sounds/sumanai/集中して.mp3',
+    '/sounds/sumanai/授業はじめるぞ.mp3',
+  ])
 
   useEffect(() => {
     async function fetchData() {
@@ -30,8 +31,6 @@ export default function StudyTestPage({ auth }: PageProps) {
       }
     }
     fetchData()
-
-    audioLoad()
   }, [])
 
   function handleStart(test: StudyTest) {
@@ -45,7 +44,6 @@ export default function StudyTestPage({ auth }: PageProps) {
       } else {
         countdown -= 1
         setStartCountDown(countdown)
-        playAudioCount()
       }
     }, 1000)
 

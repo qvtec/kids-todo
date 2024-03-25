@@ -35,21 +35,12 @@ export default function SettingsMenuPage({ auth }: PageProps) {
             ユーザ一覧
           </button>
         </Link>
-        <Link href="/study">
-          <button
-            type="button"
-            className="relative inline-flex w-full items-center border-b border-gray-200 px-4 py-6 text-sm font-medium hover:bg-gray-100 hover:text-blue-700"
-          >
-            <FontAwesomeIcon icon={faPencil} className="me-2.5 h-4 w-4" />
-            study
-          </button>
-        </Link>
         <Link href="/admin/study">
           <button
             type="button"
             className="relative inline-flex w-full items-center border-b border-gray-200 px-4 py-6 text-sm font-medium hover:bg-gray-100 hover:text-blue-700"
           >
-            <FontAwesomeIcon icon={faUser} className="me-2.5 h-4 w-4" />
+            <FontAwesomeIcon icon={faPencil} className="me-2.5 h-4 w-4" />
             study master
           </button>
         </Link>

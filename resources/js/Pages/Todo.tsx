@@ -18,7 +18,7 @@ import { now } from '@/utils/date'
 import { get, put } from '@/utils/api'
 import Loading from '@/Components/Loading'
 import { Link } from '@inertiajs/react'
-import { audioLoad, audioPlay } from '@/utils/sound'
+import useAudioPlayer from '@/hooks/useAudioPlayer'
 
 interface Todo {
   id: number
@@ -47,7 +47,9 @@ export default function TodoPage({ auth, type }: PageProps) {
   const [allDoneSend, setAllDoneSend] = useState(false)
   const [allDone, setAllDone] = useState(false)
   const [doneAnimOn, setDoneAnimOn] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState(0)
+
+  const { playAudio: playAudioBtn } = useAudioPlayer('/sounds/button-click.mp3')
+  const { playAudio: playAudioDone } = useAudioPlayer('/sounds/donpaf.mp3')
 
   const date = now('yyyy-MM-dd')
 
@@ -81,8 +83,6 @@ export default function TodoPage({ auth, type }: PageProps) {
     })
     setFilterData(filterTodo)
 
-    audioLoad()
-
     setLoading(false)
   }, [data, checkData, type])
 
@@ -99,7 +99,7 @@ export default function TodoPage({ auth, type }: PageProps) {
       if (item.id != id) return item
 
       if (!item.is_done) {
-        audioPlay('schedule_audio_' + id)
+        playAudioBtn()
         return { ...item, is_done: true }
       }
 
@@ -126,7 +126,7 @@ export default function TodoPage({ auth, type }: PageProps) {
    * AllDoneButtonClick
    */
   async function handleAllDoneButtonClick() {
-    audioPlay('audio_all_done')
+    playAudioDone()
 
     if (!allDoneSend) {
       setAllDoneSend(true)
