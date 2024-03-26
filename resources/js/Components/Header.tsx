@@ -1,19 +1,13 @@
-import { format } from 'date-fns'
-import { ja } from 'date-fns/locale'
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 
-import { isMorning } from '@/utils/date'
+import { DateWeek, isMorning } from '@/utils/date'
 
 export default function Header() {
-    const now = new Date()
-    const formattedDate = format(now, 'yyyy年M月d日 (E)', { locale: ja })
-
-    return (
-        <div className="bg-blue-800 text-white w-full py-2 px-4">
-            <span>{formattedDate}</span>
-            <FontAwesomeIcon icon={isMorning ? faSun : faMoon} className="ml-2" />
-        </div>
-    )
+  return (
+    <div className="w-full bg-blue-800 px-4 py-2 text-white">
+      <span>{DateWeek()}</span>
+      <FontAwesomeIcon icon={isMorning ? faSun : faMoon} className="ml-2" />
+    </div>
+  )
 }

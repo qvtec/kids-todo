@@ -4,14 +4,47 @@ import { useEffect, useState } from 'react'
 import { Tab } from '@headlessui/react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCrown, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 
 import { IconDefinition, findIconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { IconName } from '@fortawesome/fontawesome-common-types'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-library.add(fas)
+import {
+  faCrown,
+  faSquareCheck,
+  faUtensils,
+  faShoePrints,
+  faHandSparkles,
+  faBath,
+  faSocks,
+  faBottleWater,
+  faBook,
+  faTooth,
+  faSchool,
+  faShirt,
+  faSink,
+  faTabletScreenButton,
+  faBasketShopping,
+  faBowlFood,
+} from '@fortawesome/free-solid-svg-icons'
+library.add(
+  faCrown,
+  faSquareCheck,
+  faUtensils,
+  faShoePrints,
+  faHandSparkles,
+  faBath,
+  faSocks,
+  faBottleWater,
+  faBook,
+  faTooth,
+  faSchool,
+  faShirt,
+  faSink,
+  faTabletScreenButton,
+  faBasketShopping,
+  faBowlFood,
+)
 
 import { AnimationButton } from '@/Components/Animation'
 import { now } from '@/utils/date'

@@ -5,13 +5,10 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import jaLocale from '@fullcalendar/core/locales/ja'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCrown, faSquareCheck } from '@fortawesome/free-solid-svg-icons'
-import { faSquare } from '@fortawesome/free-regular-svg-icons'
 
 import { findIconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { IconName } from '@fortawesome/fontawesome-common-types'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
 import Layout from '@/Layouts/Layout'
 import { Answer, Check, PageProps, Todo } from '@/types'
 import { formatDate, formatDateTime, now } from '@/utils/date'
@@ -22,7 +19,8 @@ import Modal from '@/Components/Modal'
 import CalendarDetailModal from '@/Components/Features/Calendar/DetailModal'
 import CalendarDetailModalStudy from '@/Components/Features/Calendar/DetailModalStudy'
 
-library.add(fas)
+import { faCrown, faHouse, faPencil } from '@fortawesome/free-solid-svg-icons'
+library.add(faCrown, faHouse, faPencil)
 
 interface Events {
   start: string

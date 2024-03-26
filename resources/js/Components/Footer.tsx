@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSun, faMoon, faHandSparkles, faGift, faGear, faPencil } from '@fortawesome/free-solid-svg-icons'
+import { faSun, faMoon, faGift, faGear, faPencil } from '@fortawesome/free-solid-svg-icons'
 
 import { isMorning } from '@/utils/date'
 
