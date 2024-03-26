@@ -41,11 +41,9 @@ export default function StudyTestComponent({ selectedTest }: Props) {
     '/sounds/sumanai/やるじゃないか.mp3',
   ])
   const { playAudio: playAudioNG } = useAudioPlayer('/sounds/btn_ng.mp3')
-  const { playAudio: playAudioTimeup } = useAudioPlayerRandom([
-    '/sounds/sumanai/すごい.mp3', // おおっ！すごい！(イエーイ)
-    '/sounds/sumanai/できてるじゃないか.mp3', // おおっ！できてるじゃないか
-    '/sounds/sumanai/やるじゃないか.mp3',
-  ])
+  const { playAudio: playAudioTimeup1 } = useAudioPlayer('/sounds/sumanai/すごい.mp3') // おおっ！すごい！(イエーイ)
+  const { playAudio: playAudioTimeup2 } = useAudioPlayer('/sounds/sumanai/できてるじゃないか.mp3') // おおっ！できてるじゃないか
+  const { playAudio: playAudioTimeup3 } = useAudioPlayer('/sounds/sumanai/やるじゃないか.mp3')
   const { playAudio: playAudioFinish } = useAudioPlayerRandom([
     '/sounds/sumanai/ふークリア.mp3', // ふーックリアした
     '/sounds/sumanai/クリア当然_マネー.mp3',
@@ -65,18 +63,27 @@ export default function StudyTestComponent({ selectedTest }: Props) {
 
   async function handleEnd() {
     setIsFinish(true)
-    const ok_cnt = data.filter((item) => !item.is_failed).length
-    const is_complete = ok_cnt == TOTAL_COUNT
     const result_contens = data.splice(0, no + 1)
     setData(result_contens)
 
+    const ok_cnt = result_contens.filter((item) => !item.is_failed).length
+    const is_timeup = data.length > result_contens.length
+    const is_complete = is_timeup && ok_cnt == TOTAL_COUNT
+
     if (is_complete) {
+      playAudioFinish()
       seFinishImg('/img/stamp_nice.png')
-    } else if (ok_cnt > TOTAL_COUNT - 1) {
-      seFinishImg('/img/stamp_good.png')
+    } else if (!is_timeup) {
+      playAudioFinish()
+      seFinishImg('/img/stamp_nice.png')
     } else if (ok_cnt > TOTAL_COUNT - 3) {
+      playAudioTimeup1()
+      seFinishImg('/img/stamp_good.png')
+    } else if (ok_cnt > TOTAL_COUNT - 6) {
+      playAudioTimeup2()
       seFinishImg('/img/stamp_fight.png')
     } else {
+      playAudioTimeup3()
       seFinishImg('/img/stamp_black.png')
     }
 
@@ -94,7 +101,6 @@ export default function StudyTestComponent({ selectedTest }: Props) {
   async function handleTimeup() {
     data[no].is_failed = true
     // console.log('timeup!', no, data[no])
-    playAudioTimeup()
     await handleEnd()
   }
 
@@ -107,7 +113,6 @@ export default function StudyTestComponent({ selectedTest }: Props) {
     if (inputValue == question.answer) {
       if (data.length == no + 1) {
         console.log('FINISH!', data.length)
-        playAudioFinish()
         await handleEnd()
         return
       }
@@ -143,7 +148,10 @@ export default function StudyTestComponent({ selectedTest }: Props) {
         <>
           <CountdownComponent time={COUNTDOWN_TIME} onEnd={handleTimeup} />
           <div className="flex items-center justify-center text-2xl">
-            <div className="w-24">{data[no].content} = </div>
+            <div className="w-24">
+              <span className="mr-2 text-sm text-gray-400">{no}.</span>
+              {data[no].content} ={' '}
+            </div>
             <div
               className={`w-24 rounded-lg border px-4 py-2 focus:outline-none focus:ring ${
                 isErr
