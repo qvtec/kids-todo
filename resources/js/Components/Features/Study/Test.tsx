@@ -68,7 +68,7 @@ export default function StudyTestComponent({ selectedTest }: Props) {
 
     const ok_cnt = result_contens.filter((item) => !item.is_failed).length
     const is_timeup = data.length > result_contens.length
-    const is_complete = is_timeup && ok_cnt == TOTAL_COUNT
+    const is_complete = !is_timeup && ok_cnt == TOTAL_COUNT
 
     if (is_complete) {
       playAudioFinish()

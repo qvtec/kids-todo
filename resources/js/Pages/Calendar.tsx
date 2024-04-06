@@ -57,7 +57,7 @@ export default function CalendarPage({ auth }: PageProps) {
       const events = filterEevnt(checkList, studyList)
       setEvents(events)
 
-      const point = countPoint(checkList)
+      const point = countPoint(checkList, studyList)
       setPoint(point)
     }
   }
@@ -66,10 +66,9 @@ export default function CalendarPage({ auth }: PageProps) {
     const events: any[] = checkList
       .filter((item) => item.todos.length > 0)
       .map((item) => {
-        const is_complete = item.type == 'todo' ? item.all_done_at : item.todos.some((todo) => todo.is_done)
         return {
           id: item.id,
-          start: is_complete ? formatDate(item.date, 'yyyy-MM-dd 07:00:00') : item.date,
+          start: item.all_done_at ? item.all_done_at : item.date,
           title: item.type == 'todo' ? 'crown' : 'house',
         }
       })
@@ -88,7 +87,7 @@ export default function CalendarPage({ auth }: PageProps) {
     return events
   }
 
-  function countPoint(checkList: Check[]) {
+  function countPoint(checkList: Check[], studyList?: Answer[]) {
     const houseChecks = checkList.filter((item) => item.type == 'house')
     let houseCheckCount = 0
     houseChecks.map((item) => {
@@ -99,8 +98,8 @@ export default function CalendarPage({ auth }: PageProps) {
     const todoCheckCount = todoChecks.length
 
     let studyCount = 0
-    if (study && study.length > 0) {
-      const groupedData = studyDateGroup(study)
+    if (studyList && studyList.length > 0) {
+      const groupedData = studyDateGroup(studyList)
       studyCount = Object.keys(groupedData).length
     }
 
