@@ -66,14 +66,14 @@ export default function CalendarPage({ auth }: PageProps) {
     const events: any[] = checkList
       .filter((item) => item.todos.length > 0)
       .map((item) => {
+        const is_complete = item.type == 'todo' ? item.all_done_at : item.todos.some((todo) => todo.is_done)
         return {
           id: item.id,
-          start: item.all_done_at ? item.all_done_at : item.date,
+          start: is_complete ? formatDate(item.date, 'yyyy-MM-dd 07:00:00') : item.date,
           title: item.type == 'todo' ? 'crown' : 'house',
         }
       })
 
-    type AnswerDateGroup = { [date: string]: Answer[] }
     if (studyList && studyList.length > 0) {
       const groupedData = studyDateGroup(studyList)
       Object.keys(groupedData).map((date) => {
