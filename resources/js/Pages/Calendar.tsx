@@ -73,16 +73,16 @@ export default function CalendarPage({ auth }: PageProps) {
         }
       })
 
+    type AnswerDateGroup = { [date: string]: Answer[] }
     if (studyList && studyList.length > 0) {
-      studyList.map((item) => {
-        const start = formatDateTime(item.created_at, 'yyyy-MM-dd 07:00:00')
-        if (!events.some((item) => item.title == 'pencil' && item.start == start)) {
-          events.push({
-            id: events.length,
-            start: start,
-            title: 'pencil',
-          })
-        }
+      const groupedData = studyDateGroup(studyList)
+      Object.keys(groupedData).map((date) => {
+        const is_complete = groupedData[date].some((item) => item.is_complete)
+        events.push({
+          id: events.length,
+          start: is_complete ? formatDate(date, 'yyyy-MM-dd 07:00:00') : date,
+          title: 'pencil',
+        })
       })
     }
     return events
@@ -98,7 +98,24 @@ export default function CalendarPage({ auth }: PageProps) {
     const todoChecks = checkList.filter((item) => item.type == 'todo' && item.all_done_at)
     const todoCheckCount = todoChecks.length
 
-    return (houseCheckCount + todoCheckCount) * POINT_RATE
+    let studyCount = 0
+    if (study && study.length > 0) {
+      const groupedData = studyDateGroup(study)
+      studyCount = Object.keys(groupedData).length
+    }
+
+    return (houseCheckCount + todoCheckCount + studyCount) * POINT_RATE
+  }
+
+  function studyDateGroup(study: Answer[]) {
+    type AnswerDateGroup = { [date: string]: Answer[] }
+    const groupedData: AnswerDateGroup = study.reduce((acc: AnswerDateGroup, obj) => {
+      const date = formatDate(obj.created_at)
+      if (!acc[date]) acc[date] = []
+      acc[date].push(obj)
+      return acc
+    }, {})
+    return groupedData
   }
 
   function handleDispDate(info: DatesSetArg) {

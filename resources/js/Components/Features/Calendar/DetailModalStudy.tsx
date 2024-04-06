@@ -20,7 +20,6 @@ export default function CalendarDetailModalStudy({ selectEvents, onClose }: Prop
   const [subjects, setSubjects] = useState<SubjectTest[]>()
 
   useEffect(() => {
-    console.log(selectEvents)
     async function fetchData() {
       const res = await get<Answer>(`/api/study/answer/${selectEvents[0].id}`)
       setData(res)

@@ -18,12 +18,14 @@ export default function CalendarDetailModal({ selectEvent, todoAll, pointRate, o
     <>
       <div className="flex text-lg font-medium leading-6 text-gray-900">
         {formatDate(selectEvent.date, 'y年M月d日')}
-        {selectEvent.all_done_at && (
+        {selectEvent && (
           <div className="relative -mt-3 ml-3 h-10 w-10">
             <FontAwesomeIcon icon={faCrown} className="absolute left-0 top-0 h-10 w-10 text-yellow-300" />
             <div className="shadow-text absolute left-0 top-4 w-10 text-center text-sm font-bold text-rose-500">
               {selectEvent.type == 'todo'
-                ? pointRate
+                ? selectEvent.all_done_at
+                  ? pointRate
+                  : 0
                 : selectEvent.todos.filter((item) => item.is_done).length * pointRate}
             </div>
           </div>
