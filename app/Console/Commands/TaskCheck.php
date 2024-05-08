@@ -33,8 +33,9 @@ class TaskCheck extends Command
         $today = Carbon::now()->format('Y-m-d');
         $check = CheckRepository::show($today, 'todo');
 
+        $icons = array('🫠', '😇', '🥲', '🫣', '🙄', '🫨');
         if (!$check || !$check->all_done_at) {
-            $message = '今日のタスクが未完了です';
+            $message = 'することできてないよ' . $icons[array_rand($icons)];
             if ($check && $check->todos) {
                 foreach ($check->todos as $item) {
                     if (!$item['is_done']) {
