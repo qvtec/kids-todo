@@ -20,18 +20,18 @@ export default function NumberButtonsComponent({ onChange, onSubmit }: Props) {
   }
 
   function handleNumber(value: number) {
-    playAudioBtn()
     setInputData(inputValue + value)
+    playAudioBtn()
   }
 
   function handleClear() {
-    playAudioNg()
     setInputData('')
+    playAudioNg()
   }
 
   async function handleSubmit() {
-    onSubmit()
     setInputData('')
+    onSubmit()
   }
 
   return (

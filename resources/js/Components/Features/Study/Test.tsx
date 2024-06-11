@@ -148,7 +148,7 @@ export default function StudyTestComponent({ selectedTest }: Props) {
         <>
           <CountdownComponent time={COUNTDOWN_TIME} onEnd={handleTimeup} />
           <div className="flex items-center justify-center text-2xl">
-            <div className="w-24">
+            <div className="w-28">
               <span className="mr-2 text-sm text-gray-400">{no}.</span>
               {data[no].content} ={' '}
             </div>

@@ -35,6 +35,7 @@ export default function CalendarDetailModalStudy({ selectEvents, onClose }: Prop
 
   const testName = (study_test_id: number) => {
     let name = ''
+    if (study_test_id == 99) return '九九'
     subjects?.forEach((subject) => {
       const study = subject.study_test.find((study) => study.id == study_test_id)
       if (study) {

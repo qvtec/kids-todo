@@ -80,7 +80,7 @@ export default function TodoPage({ auth, type }: PageProps) {
   const [allDoneSend, setAllDoneSend] = useState(false)
   const [allDone, setAllDone] = useState(false)
   const [doneAnimOn, setDoneAnimOn] = useState(false)
-  const [currentDate, setCurrentDate] = useState<string>(new Date().toDateString())
+  const [currentDate] = useState<string>(new Date().toDateString())
 
   const { playAudio: playAudioBtn } = useAudioPlayer('/sounds/button-click.mp3')
   const { playAudio: playAudioDone } = useAudioPlayer('/sounds/donpaf.mp3')
@@ -129,7 +129,6 @@ export default function TodoPage({ auth, type }: PageProps) {
   function checkDate() {
     const newDate = new Date().toDateString()
     if (newDate !== currentDate) {
-      setCurrentDate(newDate)
       window.location.reload()
     }
   }
