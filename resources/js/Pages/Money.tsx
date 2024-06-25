@@ -100,6 +100,7 @@ export default function TodoPage({ auth }: PageProps) {
     }
 
     fetchData()
+    fetchTotalData()
     setLoading(false)
     setShowEdit(false)
   }
