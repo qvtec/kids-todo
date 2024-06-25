@@ -127,16 +127,16 @@ export default function TodoPage({ auth }: PageProps) {
           <table className="w-full text-left text-sm text-gray-500 rtl:text-right">
             <thead className="bg-gray-200 text-xs font-medium uppercase text-gray-900">
               <tr>
-                <th scope="col" className="px-6 py-2">
+                <th scope="col" className="p-2">
                   いつ
                 </th>
-                <th scope="col" className="px-6 py-2">
+                <th scope="col" className="p-2">
                   なに
                 </th>
-                <th scope="col" className="px-6 py-2">
+                <th scope="col" className="p-2">
                   つかった
                 </th>
-                <th scope="col" className="px-6 py-2">
+                <th scope="col" className="p-2">
                   もらった
                 </th>
               </tr>
@@ -144,10 +144,10 @@ export default function TodoPage({ auth }: PageProps) {
             <tbody>
               {data.map((item, i) => (
                 <tr key={i} className="odd:bg-white even:bg-gray-50">
-                  <td className="py-3 pl-2 pr-6 md:px-6">{shortDate(item.date)}</td>
-                  <td className="whitespace-nowrap text-nowrap px-3 py-2 md:px-6">{item.name}</td>
-                  <td className="py-3 pl-2 pr-6 text-end md:px-6">{item.amount < 0 && Math.abs(item.amount) + '円'}</td>
-                  <td className="py-3 pl-2 pr-6 text-end md:px-6">{item.amount > 0 && item.amount + '円'}</td>
+                  <td className="px-2 py-3 pr-6 md:px-6">{shortDate(item.date)}</td>
+                  <td className="whitespace-nowrap text-nowrap px-2 py-3 md:px-6">{item.name}</td>
+                  <td className="px-2 py-3 text-end md:px-6">{item.amount < 0 && Math.abs(item.amount) + '円'}</td>
+                  <td className="px-2 py-3 text-end md:px-6">{item.amount > 0 && item.amount + '円'}</td>
                 </tr>
               ))}
             </tbody>
