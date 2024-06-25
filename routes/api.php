@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\TodoController;
 use App\Http\Controllers\Api\CheckController;
+use App\Http\Controllers\Api\MoneyController;
 use App\Http\Controllers\Api\StudyController;
 use App\Http\Controllers\Api\Admin\StudyMasterController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('todo', TodoController::class);
     Route::apiResource('check', CheckController::class);
+    Route::apiResource('money', MoneyController::class);
 
     Route::get('todo-all', [TodoController::class, 'todoAll'])->name('todo.all');
 

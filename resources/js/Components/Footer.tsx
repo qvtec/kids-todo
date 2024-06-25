@@ -1,7 +1,7 @@
 import { Link } from '@inertiajs/react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSun, faMoon, faGift, faGear, faPencil } from '@fortawesome/free-solid-svg-icons'
+import { faSun, faMoon, faGift, faGear, faPencil, faSackDollar } from '@fortawesome/free-solid-svg-icons'
 
 import { isMorning } from '@/utils/date'
 
@@ -29,6 +29,17 @@ export default function Footer() {
             }
           >
             <FontAwesomeIcon icon={faPencil} />
+          </button>
+        </Link>
+        <Link href="/money" className="flex basis-1/4 justify-center">
+          <button
+            type="button"
+            className={
+              'inline-flex rounded-full p-2.5 ' +
+              (route().current('money') ? 'text-yellow-300' : 'text-white hover:bg-blue-700')
+            }
+          >
+            <FontAwesomeIcon icon={faSackDollar} />
           </button>
         </Link>
         <Link href="/calendar" className="flex basis-1/4 justify-center">

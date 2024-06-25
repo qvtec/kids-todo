@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/calendar', function () { return Inertia::render('Calendar'); })->name('calendar');
     Route::get('/settings', function () { return Inertia::render('Settings/Menu'); })->name('settings.menu');
     Route::get('/study', function () { return Inertia::render('Study/Test'); })->name('study');
+    Route::get('/money', function () { return Inertia::render('Money'); })->name('money');
 
     Route::get('/images/upload/{filename}', [ImageController::class, 'getUploadImage'])->name('image.upload');
 
