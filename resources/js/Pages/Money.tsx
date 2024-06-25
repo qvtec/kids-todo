@@ -206,7 +206,7 @@ export default function TodoPage({ auth }: PageProps) {
             onChange={handleInput}
           />
 
-          <ButtonPrimary className="mt-5">OK</ButtonPrimary>
+          <ButtonPrimary className="mt-5">{type == '+' ? 'もらった' : 'つかった'}</ButtonPrimary>
         </form>
       </Modal>
     </Layout>
