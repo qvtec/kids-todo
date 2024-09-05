@@ -4,10 +4,11 @@
 
 ## 概要
 
-このアプリは、子供自身でやることリストを管理できるようサポートします。
-通知機能や楽しいアニメーションを活用して、子供たちがやる気を持続させ、やり遂げることを促します。
+* このアプリは、子供自身でやることリストを管理できるようサポートします。
+* 通知機能や楽しいアニメーションを活用して、子供たちがやる気を持続させ、やり遂げることを促します。
 
-![features](https://github.com/qvtec/kids-todo/tree/main/public/kids-todo.gif?raw=true)
+![features](https://github.com/qvtec/kids-todo/tree/main/public/kids-todo.gif?raw=true)![kids-todo_3](https://github.com/user-attachments/assets/ef365a4d-5753-4593-95b9-69a78c58b3e1)
+
 
 ## 主な機能
 
